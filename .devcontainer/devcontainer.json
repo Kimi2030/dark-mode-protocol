@@ -1,0 +1,41 @@
+{
+    "name": "Dark Mode Protocol - Solana workspace",
+    "image": "mcr.microsoft.com/devcontainers/universal:2",
+    "features": {
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "lts"
+        },
+        "ghcr.io/devcontainers/features/python:1": {
+            "version": "3.11"
+        },
+        "ghcr.io/devcontainers/features/rust:1": {
+            "version": "latest"
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "esbenp.prettier-vscode",
+                "dbaeumer.vscode-eslint",
+                "ms-python.python",
+                "rust-lang.rust-analyzer",
+                "bradlc.vscode-tailwindcss"
+            ]
+        }
+    },
+    "postCreateCommand": "npm install && cd relayer && pip install -r requirements.txt && cargo build",
+    "forwardPorts": [
+        3000,
+        8000
+    ],
+    "portsAttributes": {
+        "3000": {
+            "label": "Next.js Frontend",
+            "onAutoForward": "notify"
+        },
+        "8000": {
+            "label": "Relayer Bot",
+            "onAutoForward": "notify"
+        }
+    }
+}
