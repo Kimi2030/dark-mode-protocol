@@ -47,3 +47,13 @@ git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME.git
 git branch -M main
 git push -u origin main
 ```
+
+## V2 Arbitrage Capabilities (Global Scanner Update)
+We have expanded the Tactical Dashboard to emulate a globally connected arbitrage feed:
+
+- **Wallet Configurator**: Added a dedicated `RECEIVER WALLET` input field. The execution logic will explicitly fail if no wallet address is provided.
+- **Provider Switching**: Select the capital provider for your flash loan (`Solend`, `Marginfi`, `Kamino`, `Meteora`, `Drift`).
+- **Global Opportunity Scanner**: 
+  - Integrated a live-scrolling simulated feed aggregating data from 24 major platforms (12 CEXs and 12 DEXs).
+  - Uses an expanded list of 12 volatile Solana crypto assets.
+- **One-Click Execution Matrix**: Clicking `EXECUTE` on a specific Matrix Opportunity automatically routes those specific buy/sell exchanges and expected spreads directly into the simulation backend.
