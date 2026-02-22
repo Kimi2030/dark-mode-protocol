@@ -37,10 +37,16 @@ const generateNowString = () => new Date().toISOString().split('T')[1].slice(0, 
 
 // --- Component ---
 export default function FlashLoanArbitrageDashboard() {
-    const [logs, setLogs] = useState<LogEntry[]>([
-        { id: 1, type: 'INFO', message: 'System initialized. Connecting to RPC...', timestamp: generateNowString() },
-        { id: 2, type: 'INFO', message: 'Address Lookup Tables (LUTs) Synced.', timestamp: generateNowString() },
-    ]);
+    const [logs, setLogs] = useState<LogEntry[]>([]);
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+        setLogs([
+            { id: 1, type: 'INFO', message: 'System initialized. Connecting to RPC...', timestamp: generateNowString() },
+            { id: 2, type: 'INFO', message: 'Address Lookup Tables (LUTs) Synced.', timestamp: generateNowString() },
+        ]);
+    }, []);
     const [isGasless, setIsGasless] = useState<boolean>(true);
     const [loanAmount, setLoanAmount] = useState<string>('1000');
     const [asset, setAsset] = useState<string>('USDC');
@@ -197,8 +203,8 @@ export default function FlashLoanArbitrageDashboard() {
                             onClick={executeArbitrage}
                             disabled={isExecuting}
                             className={`relative w-full py-4 rounded-md overflow-hidden font-bold tracking-widest transition-all ${isExecuting
-                                    ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
-                                    : 'bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)]'
+                                ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                                : 'bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)]'
                                 }`}
                         >
                             {isExecuting ? 'EXECUTING...' : 'INITIATE ARBITRAGE'}
@@ -280,7 +286,7 @@ export default function FlashLoanArbitrageDashboard() {
 
                         <div className="flex-1 p-4 overflow-y-auto font-mono text-[11px] sm:text-xs text-slate-300 space-y-2 relative">
                             <AnimatePresence>
-                                {logs.map((log) => {
+                                {isMounted && logs.map((log) => {
                                     let colorClass = 'text-slate-300';
                                     let bgClass = 'bg-transparent';
 
